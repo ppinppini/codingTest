@@ -1,19 +1,17 @@
 function solution(N, stages) {
-    let answer = [];
-    let players = stages.length;
-
-    for (let i = 1; i <= N; i++) {
-        let count = stages.filter(stage => stage === i).length;
-        answer.push({ stage: i, failureRate: count / players });
-        players -= count;
-    }
-
-    answer.sort((a, b) => {
-        if (a.failureRate === b.failureRate) {
-            return a.stage - b.stage;
+    const ret ={}
+    const arr =[]
+    // 스테이지 별 실패율 구하기
+    for (let i =1; i<=N ; i++){
+        let challengers=stages.filter((item)=>item>=i).length
+        let failures = stages.filter(item=>item===i).length
+        //실패율
+        const failRate= challengers==0 ? 0:failures /challengers
+        arr.push({i,failRate})
         }
-        return b.failureRate - a.failureRate;
-    });
-
-    return answer.map(obj => obj.stage);
+    arr.sort((a,b)=>{
+        if(a.failRate!==b.failRate) return b.failRate-a.failRate
+        return a.i-b.i
+    })
+    return arr.map(item=>item.i)
 }
