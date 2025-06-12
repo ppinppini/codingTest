@@ -1,16 +1,18 @@
 function solution(participant, completion) {
-    const map = new Map(); 
-
-
-    for (const name of completion) {
-        map.set(name, (map.get(name) || 0) + 1);
-    }
-
-   
-    for (const name of participant) {
-        if (!map.has(name) || map.get(name) === 0) {
-            return name; 
+    const obj ={}
+    for (const p of participant){
+        if(obj[p]){
+            obj[p] +=1
+        }else{
+            obj[p] = 1
         }
-        map.set(name, map.get(name) - 1); 
+    }
+    for (const c of completion){
+        obj[c] -= 1
+    }
+    for (const key in obj){
+        if(obj[key] > 0){
+            return key
+        }
     }
 }
