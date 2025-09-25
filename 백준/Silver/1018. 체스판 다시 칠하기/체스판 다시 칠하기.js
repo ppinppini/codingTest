@@ -32,31 +32,11 @@ const blackFirst = [
   "BWBWBWBW",
   "WBWBWBWB",
 ];
-const whiteFirst = [
-  "WBWBWBWB",
-  "BWBWBWBW",
-  "WBWBWBWB",
-  "BWBWBWBW",
-  "WBWBWBWB",
-  "BWBWBWBW",
-  "WBWBWBWB",
-  "BWBWBWBW",
-];
+
 const [N, M] = input[0].split(" ").map(Number);
 const board = input.slice(1);
 
-function whiteBoard(i, j, board) {
-  let count = 0;
-  for (let w = 0; w < 8; w++) {
-    for (let h = 0; h < 8; h++) {
-      if (board[i + w][j + h] !== whiteFirst[w][h]) {
-        count++;
-      }
-    }
-  }
-  return count;
-}
-function blackBoard(i, j, board) {
+function countMin(i, j) {
   let count = 0;
   for (let w = 0; w < 8; w++) {
     for (let h = 0; h < 8; h++) {
@@ -65,14 +45,14 @@ function blackBoard(i, j, board) {
       }
     }
   }
-  return count;
+  return Math.min(count, 64 - count);
 }
 //8 x 8 체스판 자르기
 function solution() {
   let answer=Infinity
   for (let i = 0; i <= N - 8; i++) {
     for (let j = 0; j <= M - 8; j++) {
-      answer = Math.min(answer,blackBoard(i, j, board), whiteBoard(i, j, board));
+      answer = Math.min(answer, countMin(i, j));
     }
   }
   return answer;
